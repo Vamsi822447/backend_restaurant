@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/');
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + Path2D.extname(file.originalname));
+        cb(null, Date.now() + Path.extname(file.originalname));
     }
 });
 
@@ -45,13 +45,35 @@ const addProduct = async (req, res) => {
 const getProductsByFirm = async (req, res) => {
     const firmId = req.params.firmId;
     const firm = await Firm.findById(firmId);
+    try {
+        if (!firm) {
+            return res.status(404).json({ message: "firm not found" });
+        }
+        const restaurantName = firm.firmName
 
-    if (!firm) {
-        return res.status(404).json({ message: "firm not found" });
+        const products = await Product.find({ firm: firmId });
+        return res.status(200).json({ restaurantName, products })
     }
-    const restaurantName = firm.firmName
-
-    const products = await Product.find({ firm: firmId });
-    return res.status(200).json({ restaurantName, products })
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "internal server error" });
+    }
 }
-module.exports = { addProduct, getProductsByFirm }
+const deleteProductById = async (req, res) => {
+    try {
+        const productId = req.params.productId;
+
+        const deletedProduct = await Product.findByIdAndDelete(productId);
+
+        if (!deletedProduct) {
+            return res.status(404).json({ message: "product not found" })
+        }
+        return res.status(200).json({ message: "product deleted successfully" });
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "internal server error" });
+    }
+
+}
+module.exports = { addProduct, getProductsByFirm, deleteProductById }
