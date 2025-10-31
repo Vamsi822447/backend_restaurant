@@ -59,7 +59,7 @@ const getProductsByFirm = async (req, res) => {
         return res.status(500).json({ message: "internal server error" });
     }
 }
-const deleteProductById = async (req, res) => {
+const deleteProduct = async (req, res) => {
     try {
         const productId = req.params.productId;
 
@@ -76,4 +76,4 @@ const deleteProductById = async (req, res) => {
     }
 
 }
-module.exports = { addProduct, getProductsByFirm, deleteProductById }
+module.exports = { addProduct, getProductsByFirm, deleteProduct }
