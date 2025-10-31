@@ -48,8 +48,9 @@ const getProductsByFirm = async (req, res) => {
     if (!firm) {
         return res.status(404).json({ message: "firm not found" });
     }
+    const restaurantName = firm.firmName
 
     const products = await Product.find({ firm: firmId });
-    return res.status(200).json({ products })
+    return res.status(200).json({ restaurantName, products })
 }
 module.exports = { addProduct, getProductsByFirm }
