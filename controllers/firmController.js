@@ -40,5 +40,20 @@ const addFirm = async (req, res) => {
     }
 };
 
+const deleteFirm = async (req, res) => {
+    try {
+        const firmId = req.params.firmId;
+        const deletedFirm = await Firm.findByIdAndDelete(firmId);
+        if (!deletedFirm) {
+            return res.status(404).json({ message: "firm not found" });
+        }
+        return res.status(200).json({ message: "firm deleted successfully" });
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: "internal server error" });
+    }
+}
+
 // Export controller function (without multer)
-module.exports = { addFirm };
+module.exports = { addFirm, deleteFirm };

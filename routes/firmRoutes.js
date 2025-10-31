@@ -18,5 +18,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post('/add-firm', verifyToken, upload.single('image'), firmController.addFirm);
+router.delete('/delete-firm', firmController.deleteFirm);
 
 module.exports = router;
