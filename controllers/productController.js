@@ -40,4 +40,16 @@ const addProduct = async (req, res) => {
         res.status(500).json({ message: "internal server error" });
     }
 }
-module.exports = { addProduct }
+
+const getProductsByFirm = async (req, res) => {
+    const firmId = req.params.firmId;
+    const firm = await Firm.findById(firmId);
+
+    if (!firm) {
+        return res.status(404).json({ message: "firm not found" });
+    }
+
+    const products = await Product.find({ firm: firmId });
+    return res.status(200).json({ products })
+}
+module.exports = { addProduct, getProductsByFirm }
