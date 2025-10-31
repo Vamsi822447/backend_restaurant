@@ -29,6 +29,8 @@ app.use(bodyParser.json());
 app.use('/Vendor', vendorRoutes);
 app.use('/Firm', firmRoutes)
 app.use('/Product', productRoutes)
+app.use('/uploads', express.static('uploads'));
+
 
 
 
