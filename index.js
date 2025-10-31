@@ -6,7 +6,7 @@ const app = express();
 
 const dotEnv = require('dotenv');
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 const vendorRoutes = require('./routes/vendorRoutes')
 
