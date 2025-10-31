@@ -52,6 +52,9 @@ const getProductsByFirm = async (req, res) => {
         const restaurantName = firm.firmName
 
         const products = await Product.find({ firm: firmId });
+        if (products.length === 0) {
+            return res.status(404).json({ message: "product not found" });
+        }
         return res.status(200).json({ restaurantName, products })
     }
     catch (error) {
